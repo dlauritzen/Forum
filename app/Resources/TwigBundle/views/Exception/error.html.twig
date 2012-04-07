@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Woops! {{ status_code }}: {{ status_text }}{% endblock %}
+
+{% block body %}
+
+<h1>
+	{{ status_code }}: {{ status_text }}
+	<small>Something borked!</small>
+</h1>
+
+<p>
+{% if status_code == 404 %}
+	We couldn't find the page you were looking for. Please use the navigation bar at the
+	top to find what you need. If you followed a link here from inside our website, please
+	email us through the <a href="{{ path('contact') }}">Contact</a> page.
+{% else %}
+	Something happened that I can't really explain to you. Sorry.
+{% endif %}
+</p>
+
+{% endblock %}

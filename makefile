@@ -15,3 +15,7 @@ SCHEMA_ACTION = --force
 schema:
 	php app/console doctrine:schema:update $(SCHEMA_ACTION)
 
+cache:
+	php app/console --env=prod cache:clear
+	php app/console --env=prod cache:warmup
+

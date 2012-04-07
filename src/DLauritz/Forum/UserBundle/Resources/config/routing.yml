@@ -1,0 +1,13 @@
+register:
+  pattern: /register
+  defaults:
+    _controller: DLauritzForumUserBundle:User:register
+    _format: html
+
+user_profile:
+  pattern: /user/{username}.{_format}
+  defaults:
+    _controller: DLauritzForumUserBundle:User:profile
+    _format: html
+  requirements:
+    _format: html|json

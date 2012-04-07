@@ -1,3 +1,53 @@
+DLauritzForumUserBundle:
+    resource: "@DLauritzForumUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+DLauritzForumContentBundle:
+    resource: "@DLauritzForumContentBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# The forum index
+index:
+  pattern: /
+  defaults:
+    _controller: DLauritzForumContentBundle:Index:index
+    _format: html
+
+# Site-wide Search
+search:
+  pattern: /search/{query}
+  defaults:
+    _controller: DLauritzForumContentBundle:Index:search
+    _format: html
+    query: ~
+
+# Credits page
+credits:
+  pattern: /credits
+  defaults:
+    _controller: DLauritzForumContentBundle:Index:credits
+    _format: html
+
+# Contact page
+contact:
+  pattern: /contact
+  defaults:
+    _controller: DLauritzForumContentBundle:Index:contact
+    _format: html
+
+# Log In/Out -- The controller for these is automagic
+login:
+  pattern: /login
+  defaults:
+    _controller: DLauritzForumUserBundle:User:login
+    _format: html
+
+login_check:
+  pattern: /login_check
+
+logout:
+  pattern: /logout
+
 # Internal routing configuration to handle ESI
 #_internal:
 #   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"

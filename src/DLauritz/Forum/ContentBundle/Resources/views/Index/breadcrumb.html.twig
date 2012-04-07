@@ -1,0 +1,18 @@
+<ul class="breadcrumb">
+
+{% if index is not defined %}
+	<li><a href="{{ path('index') }}"><i class="icon-home"></i></a></li>
+{% else %}
+	<li><i class="icon-home"></i></li>
+{% endif %}
+
+{# Now for the recursive fun #}
+{% if forum is defined %}
+{% include 'DLauritzForumContentBundle:Index:breadcrumb_rec.html.twig' with { 'forum' : forum, 'first' : thread is not defined } %}
+{% endif %}
+
+{% if thread is defined %}
+	<li>{{ thread.name }}</li>
+{% endif %}
+
+</ul>

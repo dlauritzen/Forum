@@ -1,0 +1,53 @@
+
+<div class="container" id="alerts">
+{# Errors #}
+	{% if app.session.hasFlash('error') %}
+	<div class="row">
+		<div class="span12">
+			<div class="alert alert-error fade in">
+				<a class="close" data-dismiss="alert">&times;</a>
+				<strong>Error:</strong>
+				Woopsy!
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+{# Warnings #}
+	{% if app.session.hasFlash('warning') %}
+	<div class="row">
+		<div class="span12">
+			<div class="alert fade in">
+				<a class="close" data-dismiss="alert">&times;</a>
+				<strong>Notice:</strong> 
+				Text should go here...
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+{# Info #}
+	{% if app.session.hasFlash('info') %}
+	<div class="row">
+		<div class="span12">
+			<div class="alert alert-info fade in">
+				<a class="close" data-dismiss="alert">&times;</a>
+				Text should go here...
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+{# Success #}
+	{% if app.session.hasFlash('success') %}
+	<div class="row">
+		<div class="span12">
+			<div class="alert alert-success fade in">
+				<a class="close" data-dismiss="alert">&times;</a>
+				Text should go here...
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+</div>

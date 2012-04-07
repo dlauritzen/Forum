@@ -1,0 +1,17 @@
+{% extends 'DLauritzForumContentBundle::indexlayout.html.twig' %}
+
+{% block title %}Forum Index{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="span12">
+{% include 'DLauritzForumContentBundle:Index:breadcrumb.html.twig' with { 'index' : true } %}
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<p>Insert content here!</p>
+	</div>
+</div>
+{% endblock %}

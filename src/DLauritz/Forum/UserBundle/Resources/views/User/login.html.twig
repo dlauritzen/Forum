@@ -1,0 +1,52 @@
+{% extends 'DLauritzForumContentBundle::pagelayout.html.twig' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+{% if error %}
+<div class="row">
+	<div class="span6 offset3">
+		<div class="alert alert-error fade in">
+			<a class="close" data-dismiss="alert">&times;</a>
+			<strong>Error:</strong>
+			{{ error.message }}
+		</div>
+	</div>
+</div>
+{% endif %}
+
+<div class="row">
+	<div class="span6 offset3">
+		<form class="well form-horizontal" id="loginform" name="loginform" action="{{ path('login_check') }}" method="POST">
+			<fieldset>
+				<legend>Log In</legend>
+				<div class="control-group">
+					<label class="control-label" for="username">Username</label>
+					<div class="controls">
+						<input type="text" class="input-large" id="username" name="_username" value="{{ last_username }}" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="password">Password</label>
+					<div class="controls">
+						<input type="password" class="input-large" id="password" name="_password" />
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<label class="checkbox">
+							<input type="checkbox" id="rememberme" name="rememberme" />
+							Remember Me
+						</label>
+						<a href="#">Forgot Password</a>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<a class="btn" href="{{ path('index') }}">Cancel</a>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+{% endblock %}

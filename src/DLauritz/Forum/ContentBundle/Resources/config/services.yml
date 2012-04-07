@@ -1,0 +1,7 @@
+parameters:
+#    d_lauritz_forum_content.example.class: DLauritz\Forum\ContentBundle\Example
+
+services:
+#    d_lauritz_forum_content.example:
+#        class: %d_lauritz_forum_content.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

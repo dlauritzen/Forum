@@ -1,0 +1,22 @@
+DLauritz\Forum\UserBundle\Entity\User:
+  type: entity
+  table: users
+  id:
+    id:
+      type: bigint
+      generator: { strategy: AUTO }
+  fields:
+    username:
+      type: string
+    password:
+      type: string
+    display_name:
+      type: string
+    email:
+      type: string
+    avatar:
+      type: string
+    timezone:
+      type: string
+    joined:
+      type: datetime

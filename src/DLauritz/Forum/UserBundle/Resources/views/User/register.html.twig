@@ -1,0 +1,98 @@
+{% extends 'DLauritzForumContentBundle::pagelayout.html.twig' %}
+
+{% block other_javascript %}
+function setConfirmPassword(ok) {
+	if (ok) {
+		$("#passok").removeClass("icon-remove").addClass("icon-ok");
+	} else {
+		$("#passok").removeClass("icon-ok").addClass("icon-remove");
+	}
+}
+
+function checkConfirmPassword(e) {
+	pass = $("#password");
+	conf = $("#confpass");
+
+	ret = ($(pass).val() == $(conf).val()) && $(pass).val() != '';
+
+	setConfirmPassword(ret);
+}
+{% endblock %}
+
+{% block jquery_ready %}
+	{{ parent() }}
+	$("#confpass").keyup(checkConfirmPassword);
+	$("#password").keyup(checkConfirmPassword);
+{% endblock %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="span6 offset3">
+		<form class="well form-horizontal" id="registerform" name="registerform" action="{{ path('register') }}" method="POST">
+			<fieldset>
+				<legend>
+					Register
+					<small> &mdash; All fields are required</small>
+				</legend>
+				<div class="control-group">
+					<label class="control-label" for="username">Username</label>
+					<div class="controls">
+						<input type="text" class="input-large" name="username" id="username" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="password">Password</label>
+					<div class="controls">
+						<input type="password" class="input-large" name="password" id="password" />
+						<!--<span class="help-inline">Must be 6 characters or more</span>-->
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="confpass">Confirm Password</label>
+					<div class="controls">
+						<input type="password" class="input-large" name="confpass" id="confpass" />
+						<span class="help-inline"><i id="passok" class="icon-remove"></i></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="email">E-Mail Address</label>
+					<div class="controls">
+						<input type="email" class="input-large" name="email" id="email" />
+					</div>
+				</div>
+
+				<legend>
+					Preferences
+					<small> &mdash; For your happiness</small>
+				</legend>
+				<div class="control-group">
+					<label class="control-label" for="displayname">
+						Display Name
+						<i rel="popover" title="Display Name" class="icon-question-sign" data-content="Your Display Name is what other users see when you post content."></i>
+					</label>
+					<div class="controls">
+						<input type="text" class="input-large" name="displayname" id="displayname" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="timezone">
+						Time Zone
+						<i rel="popover" title="Time Zone" class="icon-question-sign" data-content="We use this to format the times you see. It keeps things straight."></i>
+					</label>
+					<div class="controls">
+{% include 'DLauritzForumUserBundle::timezones_select.html.twig' with { 'bootstrap': true } %}
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<button class="btn">Cancel</button>
+					<button type="reset" class="btn">Clear</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+{% endblock %}
+
