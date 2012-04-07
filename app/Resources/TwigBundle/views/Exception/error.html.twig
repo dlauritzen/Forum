@@ -14,9 +14,39 @@
 	We couldn't find the page you were looking for. Please use the navigation bar at the
 	top to find what you need. If you followed a link here from inside our website, please
 	email us through the <a href="{{ path('contact') }}">Contact</a> page.
+{% elseif status_code == 500 %}
+	Some part of the site is most likely mis-configured. Please copy the following 
+	information into a message and send it to me through the 
+	<a href="{{ path('contact') }}">Contact</a> page.
 {% else %}
-	Something happened that I can't really explain to you. Sorry.
+	Something happened that I can't really explain to you. Sorry. Please copy the following 
+	information into a message and send it to me through the 
+	<a href="{{ path('contact') }}">Contact</a> page.
 {% endif %}
+
+	<div class="alert alert-info">
+		<h3>Diagnostic Information</h3>
+		<ul class="unstyled">
+			<li>Environment: {{ app.environment }}</li>
+			<li>Debug?: {% if app.debug %}True{% else %}False{% endif %}</li>
+			<li>Request: {{ app.request.uri }}</li>
+			<li>Method: {{ app.request.method }}</li>
+			<li>User Agent: {{ app.request.server.get('HTTP_USER_AGENT') }}</li>
+			<li>
+				User:
+				{% if app.user is null %}
+				<em>None</em>
+				{% else %}
+				{{ app.user.id }} - {{ app.user.username }}
+				{% endif %}
+			</li>
+			<li>Authentication:
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %} Full 
+			{% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') %} Remembered
+			{% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %} Anonymous
+			{% else %} <em>None</em> {% endif %}</li>
+		</ul>
+	</div>
 </p>
 
 {% endblock %}

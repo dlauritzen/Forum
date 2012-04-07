@@ -15,12 +15,4 @@ class IndexController extends Controller {
 		return $this->render('DLauritzForumContentBundle:Index:index.html.twig');
 	}
 	
-	public function creditsAction() {
-		return $this->render('DLauritzForumContentBundle:Index:credits.html.twig');
-	}
-	
-	public function contactAction() {
-		return $this->render('DLauritzForumContentBundle:Index:contact.html.twig');
-	}
-	
 }

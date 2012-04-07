@@ -24,6 +24,10 @@ security:
                 path:   /logout
                 target: /
             anonymous: ~
+            remember_me:
+                key: %secret%
+                lifetime: 84600
+                path: /
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

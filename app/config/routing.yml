@@ -1,3 +1,7 @@
+DLauritzForumPagesBundle:
+    resource: "@DLauritzForumPagesBundle/Resources/config/routing.yml"
+    prefix:   /
+
 DLauritzForumUserBundle:
     resource: "@DLauritzForumUserBundle/Resources/config/routing.yml"
     prefix:   /
@@ -20,20 +24,6 @@ search:
     _controller: DLauritzForumContentBundle:Index:search
     _format: html
     query: ~
-
-# Credits page
-credits:
-  pattern: /credits
-  defaults:
-    _controller: DLauritzForumContentBundle:Index:credits
-    _format: html
-
-# Contact page
-contact:
-  pattern: /contact
-  defaults:
-    _controller: DLauritzForumContentBundle:Index:contact
-    _format: html
 
 # Log In/Out -- The controller for these is automagic
 login:

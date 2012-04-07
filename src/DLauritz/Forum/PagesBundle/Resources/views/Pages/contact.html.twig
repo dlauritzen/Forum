@@ -1,10 +1,11 @@
-{% extends 'DLauritzForumContentBundle::pagelayout.html.twig' %}
+{% extends 'DLauritzForumPagesBundle::pagelayout.html.twig' %}
 
 {% block title %}Contact Us{% endblock %}
 
 {% block content %}
-<div class="row">
-	<div class="span8 offset2">
+<div class="container">
+	<div class="row">
+		<div class="span8 offset1">
 		<form class="well form-horizontal" name="contactform" id="contactform" action="{{ path('contact') }}" method="POST">
 			<fieldset>
 				<legend>
@@ -40,6 +41,7 @@
 				</div>
 			</fieldset>
 		</form>
+		</div>
 	</div>
 </div>
 {% endblock %}

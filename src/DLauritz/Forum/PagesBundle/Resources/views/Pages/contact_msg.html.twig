@@ -1,0 +1,12 @@
+<h2>Message Details</h2>
+<ul>
+	<li>From: {{ name }}</li>
+	<li>EMail: {{ email }}</li>
+	<li>Subject: {{ subject }}</li>
+	<li>Time: {{ time|date('d M Y h:i:s a') }}</li>
+</ul>
+
+<h2>Body</h2>
+<p>
+{{ message }}
+</p>

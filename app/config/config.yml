@@ -16,6 +16,12 @@ framework:
         default_locale: %locale%
         auto_start:     true
 
+services:
+    acme_hello.twig.extension.debug:
+        class:        Twig_Extension_Debug
+        tags:
+             - { name: 'twig.extension' }
+
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
@@ -54,6 +60,8 @@ swiftmailer:
     host:      %mailer_host%
     username:  %mailer_user%
     password:  %mailer_password%
+    auth_mode: login
+    encryption: tls
 
 jms_security_extra:
     secure_controllers:  true

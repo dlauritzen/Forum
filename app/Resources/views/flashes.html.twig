@@ -7,7 +7,7 @@
 			<div class="alert alert-error fade in">
 				<a class="close" data-dismiss="alert">&times;</a>
 				<strong>Error:</strong>
-				Woopsy!
+				{{ app.session.flash('error') }}
 			</div>
 		</div>
 	</div>
@@ -20,7 +20,7 @@
 			<div class="alert fade in">
 				<a class="close" data-dismiss="alert">&times;</a>
 				<strong>Notice:</strong> 
-				Text should go here...
+				{{ app.session.flash('warning') }}
 			</div>
 		</div>
 	</div>
@@ -32,7 +32,7 @@
 		<div class="span12">
 			<div class="alert alert-info fade in">
 				<a class="close" data-dismiss="alert">&times;</a>
-				Text should go here...
+				{{ app.session.flash('info') }}
 			</div>
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 		<div class="span12">
 			<div class="alert alert-success fade in">
 				<a class="close" data-dismiss="alert">&times;</a>
-				Text should go here...
+				{{ app.session.flash('success') }}
 			</div>
 		</div>
 	</div>

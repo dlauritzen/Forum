@@ -1,0 +1,21 @@
+
+# Credits page
+credits:
+  pattern: /credits.{_format}
+  defaults:
+    _controller: DLauritzForumPagesBundle:Pages:credits
+    _format: html
+
+# Contact page
+contact:
+  pattern: /contact.{_format}
+  defaults:
+    _controller: DLauritzForumPagesBundle:Pages:contact
+    _format: html
+
+# Legal and Licensing page
+legal:
+  pattern: /legal.{_format}
+  defaults:
+    _controller: DLauritzForumPagesBundle:Pages:legal
+    _format: html

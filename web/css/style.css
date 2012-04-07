@@ -7,6 +7,22 @@
 */
 
 body {
+	/* This accounts for Bootstrap's fixed navbar. */
 	padding-top: 50px;
+	padding-bottom: 50px; /* Just for fun */
+}
+
+#bottom_links li {
+	display: inline;
+	padding-right: 10px;
+}
+
+#license {
+	text-align: right;
+	font-size: small;
+}
+
+#footer img {
+	vertical-align: text-top;
 }
 

@@ -49,6 +49,58 @@
 {% block body %}Body{% endblock %}
 </div>
 
+{# Footer #}
+{% block footer %}
+<div class="container" id="footer">
+	<div class="row"><hr class="span12" /></div>
+	<div class="row">
+		<div class="span6" id="bottom_links">
+			<ul class="unstyled">
+				<li><a href="{{ path('index') }}">Home</a></li>
+				<li><a href="{{ path('contact') }}">Contact</a></li>
+				<li><a href="{{ path('credits') }}">Credits</a></li>
+				<li><a href="{{ path('legal') }}">Legal</a></li>
+			</ul>
+		</div>
+		<div class="span6" id="license">
+<p>
+	Copyright &copy; <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.dallinlauritzen.com" property="cc:attributionName" rel="cc:attributionURL">Dallin Lauritzen</a>
+	<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br />
+
+	Built on <a href="http://symfony.com">Symfony</a> and <a href="http://twitter.github.com/bootstrap/index.html">Bootstrap</a>
+</p>
+
+<div class="invisible">This <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" rel="dct:type">work</span> 
+by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.dallinlauritzen.com" property="cc:attributionName" rel="cc:attributionURL">Dallin Lauritzen</a> 
+is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{# Debugging stuff #}
+{% if app.debug %}
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<div class="alert alert-info alert-box fade in">
+				<a class="close" data-dismiss="alert">&times;</a>
+				<h2>Debug</h2>
+				<ul class="unstyled">
+					<li>User: {% if app.user is null %}<em>None</em>{% else %}{{ app.user.username }}{% endif %}</li>
+					<li>Authentication:
+{% if is_granted('IS_AUTHENTICATED_FULLY') %} Full 
+{% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') %} Remembered
+{% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %} Anonymous
+{% else %} <em>None</em> {% endif %}</li>
+					<li>User Agent: {{ app.request.server.get('HTTP_USER_AGENT') }}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+
 {% block javascripts %}{% endblock %}
 
 </body>

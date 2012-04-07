@@ -1,11 +1,11 @@
-{% extends 'DLauritzForumContentBundle::pagelayout.html.twig' %}
+{% extends 'DLauritzForumPagesBundle::pagelayout.html.twig' %}
 
 {% block title %}Log In{% endblock %}
 
 {% block content %}
 {% if error %}
 <div class="row">
-	<div class="span6 offset3">
+	<div class="span6 offset2">
 		<div class="alert alert-error fade in">
 			<a class="close" data-dismiss="alert">&times;</a>
 			<strong>Error:</strong>
@@ -16,7 +16,7 @@
 {% endif %}
 
 <div class="row">
-	<div class="span6 offset3">
+	<div class="span6 offset2">
 		<form class="well form-horizontal" id="loginform" name="loginform" action="{{ path('login_check') }}" method="POST">
 			<fieldset>
 				<legend>Log In</legend>
@@ -35,7 +35,7 @@
 				<div class="control-group">
 					<div class="controls">
 						<label class="checkbox">
-							<input type="checkbox" id="rememberme" name="rememberme" />
+							<input type="checkbox" id="remember_me" name="_remember_me" />
 							Remember Me
 						</label>
 						<a href="#">Forgot Password</a>
