@@ -190,4 +190,29 @@ class User implements UserInterface {
         return $this->joined;
     }
 	
+    /**
+     * @var string $timezone
+     */
+    private $timezone;
+
+
+    /**
+     * Set timezone
+     *
+     * @param string $timezone
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+    }
+
+    /**
+     * Get timezone
+     *
+     * @return string 
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
 }

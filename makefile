@@ -1,3 +1,8 @@
+ifeq ($(shell uname), 'Darwin')
+PHP = php
+else
+PHP = php-5.3
+endif
 
 permissions:
 	sudo chmod +a "_www allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
@@ -5,17 +10,17 @@ permissions:
 	sudo chmod +a "_www allow delete,write,append,file_inherit,directory_inherit" app/config/parameters.ini
 
 createdb:
-	php app/console doctrine:database:create
+	$(PHP) app/console doctrine:database:create
 
 BUNDLE_NAME = DLauritz
 entities:
-	php app/console doctrine:generate:entities $(BUNDLE_NAME)
+	$(PHP) app/console doctrine:generate:entities $(BUNDLE_NAME)
 
 SCHEMA_ACTION = --force
 schema:
-	php app/console doctrine:schema:update $(SCHEMA_ACTION)
+	$(PHP) app/console doctrine:schema:update $(SCHEMA_ACTION)
 
 cache:
-	php app/console --env=prod cache:clear
-	php app/console --env=prod cache:warmup
+	$(PHP) app/console --env=prod cache:clear
+	$(PHP) app/console --env=prod cache:warmup
 
