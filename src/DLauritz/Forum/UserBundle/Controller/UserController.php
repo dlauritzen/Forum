@@ -13,31 +13,50 @@ class UserController extends Controller {
 	
 	public function registerAction() {
 		$request = $this->getRequest();
+		$user = new User();
+		
+		$form = $this->createFormBuilder($user)
+				->add('username', 'text')
+				->add('password', 'repeated', array('type' => 'password'))
+				->add('email', 'email')
+				->add('display_name', 'text', array('required' => false))
+				->add('timezone', 'timezone', array('required' => false))
+				->getForm();
 		
 		if ($request->getMethod() == "POST") {
 			// Try to register
-			$factory = $this->get('security.encoder_factory');
-			$user = new User();
-			$encoder = $factory->getEncoder($user);
-			$user->setUsername($request->get('username'));
-			$user->setDisplayName($request->get('displayname'));
-			$user->setPassword($encoder->encodePassword($request->get('password'), $user->getSalt()));
-			$user->setAvatar('');
-			$user->setEmail($request->get('email'));
-			$user->setJoined(new \DateTime());
-			$user->setTimezone($request->get('timezone'));
+			$form->bindRequest($request);
+			if ($form->isValid()) {
+				$factory = $this->get('security.encoder_factory');
+				$encoder = $factory->getEncoder($user);
+				
+				// Make the password encoded
+				$user->setPassword($encoder->encodePassword($request->get('password'), $user->getSalt()));
+				
+				// Add fields not provided in the form
+				$user->setAvatar('');
+				$user->setJoined(new \DateTime());
+				
+				// Fix optional entries
+				if ($user->getDisplayName() == null) {
+					$user->setDisplayName('');
+				}
+				
+				$em = $this->getDoctrine()->getEntityManager();
+				$em->persist($user);
+				$em->flush();
+				
+				$this->get('session')->setFlash('success', "You were registered! Your username is " 
+						. $user->getUsername() . ".");
 			
-			$em = $this->getDoctrine()->getEntityManager();
-			$em->persist($user);
-			$em->flush();
-			
-			$this->get('session')->setFlash('success', "You were registered! Your username is " 
-					. $user->getUsername() . ".");
-			
-			return $this->redirect($this->generateUrl('index'));
+				return $this->redirect($this->generateUrl('index'));
+			} else {
+				$this->get('session')->setFlash('error', "Form validation failed. See errors below.");
+			}
 		}
 		
-		return $this->render('DLauritzForumUserBundle:User:register.html.twig');
+		return $this->render('DLauritzForumUserBundle:User:register.html.twig', 
+				array('form' => $form->createView()));
 	}
 	
 	public function loginAction() {

@@ -1,0 +1,23 @@
+
+# Username:
+# Starts and ends with a word character, but has
+# word characters, spaces, or underscores in-between
+
+DLauritz\Forum\UserBundle\Entity\User:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+      fields: 'username'
+      message: "That username is already taken"
+      em: DLauritzForumUserBundle:User
+  properties:
+    username:
+      - NotBlank: ~
+      - MinLength: { limit: 6, message: "Username must be at least 6 characters long" }
+      - Regex:
+        pattern: "/^\w[\w _]*\w$/"
+        message: "Invalid username"
+    password:
+      - NotBlank: { groups: [registration] }
+      - MinLength: { limit: 6, message: "Password must be at least 6 characters long" }
+    email:
+      - Email: ~

@@ -1,0 +1,19 @@
+DLauritz\Forum\ContentBundle\Entity\Category:
+  type: entity
+  table: categories
+  id:
+    id:
+      type: bigint
+      generator: { strategy: AUTO }
+  fields:
+    name:
+      type: string
+    rank:
+      type: integer
+      default: 1 # 0=public, 1=user, 2=admin, 3=sysop
+    description:
+      type: string
+  oneToMany:
+    forums:
+      targetEntity: Forum
+      mappedBy: category

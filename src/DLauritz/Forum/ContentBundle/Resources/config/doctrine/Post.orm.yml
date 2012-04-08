@@ -1,0 +1,27 @@
+DLauritz\Forum\ContentBundle\Entity\Post:
+  type: entity
+  table: posts
+  id:
+    id:
+      type: bigint
+      generator: { strategy: AUTO }
+  fields:
+    content:
+      type: text
+    created:
+      type: datetime
+    modified:
+      type: datetime
+  manyToOne:
+    thread:
+      targetEntity: Thread
+      inversedBy: posts
+      joinColumn:
+        name: thread_id
+        referencedColumnName: id
+    creator:
+      targetEntity: DLauritz\Forum\UserBundle\Entity\User
+      inversedBy: posts
+      joinColumn:
+        name: user_id
+        referencedColumnName: id

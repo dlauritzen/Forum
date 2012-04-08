@@ -7,7 +7,7 @@ use \Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface {
 	
 	public function equals(UserInterface $other) {
-		return $this->getUsername() === $other->getUsername();
+		return $this->getUsername() == $other->getUsername();
 	}
 	
 	public function getSalt() {
@@ -214,5 +214,59 @@ class User implements UserInterface {
     public function getTimezone()
     {
         return $this->timezone;
+    }
+    /**
+     * @var DLauritz\Forum\ContentBundle\Entity\Post
+     */
+    private $posts;
+
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add posts
+     *
+     * @param DLauritz\Forum\ContentBundle\Entity\Post $posts
+     */
+    public function addPost(\DLauritz\Forum\ContentBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+    }
+
+    /**
+     * Get posts
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+    /**
+     * @var integer $rank
+     */
+    private $rank;
+
+
+    /**
+     * Set rank
+     *
+     * @param integer $rank
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return integer 
+     */
+    public function getRank()
+    {
+        return $this->rank;
     }
 }

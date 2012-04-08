@@ -12,11 +12,20 @@ DLauritz\Forum\UserBundle\Entity\User:
       type: string
     display_name:
       type: string
+      default: ''
+    rank:
+      type: integer
+      default: 1 # 1=user, 2=admin, 3=sysop
     email:
       type: string
     avatar:
       type: string
     timezone:
       type: string
+      default: ''
     joined:
       type: datetime
+  oneToMany:
+    posts:
+      targetEntity: DLauritz\Forum\ContentBundle\Entity\Post
+      mappedBy: creator

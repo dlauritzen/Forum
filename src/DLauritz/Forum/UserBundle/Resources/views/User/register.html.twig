@@ -10,8 +10,8 @@ function setConfirmPassword(ok) {
 }
 
 function checkConfirmPassword(e) {
-	pass = $("#password");
-	conf = $("#confpass");
+	pass = $("#{{ form.password.first.vars.id }}");
+	conf = $("#{{ form.password.second.vars.id }}");
 
 	ret = ($(pass).val() == $(conf).val()) && $(pass).val() != '';
 
@@ -21,45 +21,49 @@ function checkConfirmPassword(e) {
 
 {% block jquery_ready %}
 	{{ parent() }}
-	$("#confpass").keyup(checkConfirmPassword);
-	$("#password").keyup(checkConfirmPassword);
+	$("#{{ form.password.first.vars.id }}").keyup(checkConfirmPassword);
+	$("#{{ form.password.second.vars.id }}").keyup(checkConfirmPassword);
 {% endblock %}
 
 {% block title %}Register{% endblock %}
 
 {% block content %}
 <div class="row">
-	<div class="span6 offset3">
-		<form class="well form-horizontal" id="registerform" name="registerform" action="{{ path('register') }}" method="POST">
+	<div class="span6 offset2">
+		{{ form_errors(form) }}
+		<form class="well form-horizontal" id="registerform" name="registerform" 
+				action="{{ path('register') }}" method="POST" enctype="{{ form_enctype(form) }}">
 			<fieldset>
 				<legend>
 					Register
 					<small> &mdash; All fields are required</small>
 				</legend>
 				<div class="control-group">
-					<label class="control-label" for="username">Username</label>
+					{{ form_label(form.username, "Username", {'attr': {'class': 'control-label'}}) }}
 					<div class="controls">
-						<input type="text" class="input-large" name="username" id="username" />
+						{{ form_widget(form.username, { 'attr': { 'class': 'input-large' }}) }}
+						<span class="help-inline">{{ form_errors(form.username) }}</span>
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="password">Password</label>
+					{{ form_label(form.password.first, "Password", {'attr': {'class': 'control-label'}}) }}
 					<div class="controls">
-						<input type="password" class="input-large" name="password" id="password" />
-						<!--<span class="help-inline">Must be 6 characters or more</span>-->
+						{{ form_widget(form.password.first, { 'attr': { 'class': 'input-large' }}) }}
+						<span class="help-inline">{{ form_errors(form.password) }}</span>
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="confpass">Confirm Password</label>
+					{{ form_label(form.password.second, "Confirm Password", { 'attr': { 'class': 'control-label' }}) }}
 					<div class="controls">
-						<input type="password" class="input-large" name="confpass" id="confpass" />
+						{{ form_widget(form.password.second, { 'attr': { 'class': 'input-large' }}) }}
 						<span class="help-inline"><i id="passok" class="icon-remove"></i></span>
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="email">E-Mail Address</label>
+					{{ form_label(form.email, "E-Mail Address", { 'attr': { 'class': 'control-label' }}) }}
 					<div class="controls">
-						<input type="email" class="input-large" name="email" id="email" />
+						{{ form_widget(form.email, { 'attr': { 'class': 'input-large' }}) }}
+						<span class="help-inline">{{ form_errors(form.email) }}</span>
 					</div>
 				</div>
 
@@ -68,21 +72,21 @@ function checkConfirmPassword(e) {
 					<small> &mdash; For your happiness</small>
 				</legend>
 				<div class="control-group">
-					<label class="control-label" for="displayname">
+					<label class="control-label" for="{{ form.display_name.vars.id }}">
 						Display Name
 						<i rel="popover" title="Display Name" class="icon-question-sign" data-content="Your Display Name is what other users see when you post content."></i>
 					</label>
 					<div class="controls">
-						<input type="text" class="input-large" name="displayname" id="displayname" />
+						{{ form_widget(form.display_name, { 'attr': { 'class': 'input-large' }}) }}
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="timezone">
+					<label class="control-label" for="{{ form.display_name.vars.id }}">
 						Time Zone
 						<i rel="popover" title="Time Zone" class="icon-question-sign" data-content="We use this to format the times you see. It keeps things straight."></i>
 					</label>
 					<div class="controls">
-{% include 'DLauritzForumUserBundle::timezones_select.html.twig' with { 'bootstrap': true } %}
+						{{ form_widget(form.timezone) }}
 					</div>
 				</div>
 				<div class="form-actions">
@@ -90,6 +94,7 @@ function checkConfirmPassword(e) {
 					<button class="btn">Cancel</button>
 					<button type="reset" class="btn">Clear</button>
 				</div>
+				{{ form_rest(form) }}
 			</fieldset>
 		</form>
 	</div>
