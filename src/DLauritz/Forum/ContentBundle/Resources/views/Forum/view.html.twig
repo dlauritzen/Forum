@@ -1,0 +1,37 @@
+{% extends 'DLauritzForumContentBundle::indexlayout.html.twig' %}
+
+{% block title %}{{ forum.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="span12">
+{% include 'DLauritzForumContentBundle:Index:breadcrumb.html.twig' with { 'forum': forum, 'first': true } %}
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<div class="page-header">
+			<h2>{{ forum.name }}</h2>
+		</div>
+	</div>
+</div>
+
+{% for thread in forum.threads %}
+<div class="row">
+	<div class="span1 right">
+		<i class="icon-envelope middle" rel="tooltip" title="New Posts" data-placement="left"></i>
+	</div>
+	<div class="span6">
+		<a class="thread-label widelink" href="{{ path('thread_view', {'id': thread.id}) }}">{{ thread.name }}</a>
+	</div>
+</div>
+{% else %}
+<div class="row">
+	<div class="span12 center">
+		<em>No Threads</em>
+	</div>
+</div>
+{% endfor %}
+
+{% endblock %}

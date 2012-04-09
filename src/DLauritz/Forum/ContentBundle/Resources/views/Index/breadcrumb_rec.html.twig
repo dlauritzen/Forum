@@ -1,12 +1,13 @@
 {# The recursive breadcrumb creator #}
 {% if forum.parent is not null %}
 {% include 'DLauritzForumContentBundle:Index:breadcrumb_rec.html.twig' with { 'forum' : forum.parent, 'first' : false } %}
-{% endif %}
-{% if first %}
+{% else %}
 	<li>
-		<a href="{{ path('forum_view', { 'forum' : forum.id }) }}">{{ forum.name }}</a>
+		<a href="{{ path('category_view', {'id': forum.category.id}) }}">{{ forum.category.name }}</a>
 		<span class="divider">/</span>
 	</li>
-{% else %}
-	<li>{{ forum.name }}</li>
 {% endif %}
+	<li {% if first %}class="active"{%endif %}>
+		<a href="{{ path('forum_view', { 'id' : forum.id }) }}">{{ forum.name }}</a>
+		{% if not first %}<span class="divider">/</span>{% endif %}
+	</li>

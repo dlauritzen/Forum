@@ -4,8 +4,14 @@ register:
     _controller: DLauritzForumUserBundle:User:register
     _format: html
 
+register_check:
+  pattern: /register/save
+  defaults:
+    _controller: DLauritzForumUserBundle:User:registerCheck
+    _format: html
+
 user_profile:
-  pattern: /user/{username}.{_format}
+  pattern: /user/{id}.{_format}
   defaults:
     _controller: DLauritzForumUserBundle:User:profile
     _format: html

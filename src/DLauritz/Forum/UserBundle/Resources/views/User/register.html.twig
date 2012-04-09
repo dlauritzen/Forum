@@ -21,8 +21,15 @@ function checkConfirmPassword(e) {
 
 {% block jquery_ready %}
 	{{ parent() }}
-	$("#{{ form.password.first.vars.id }}").keyup(checkConfirmPassword);
-	$("#{{ form.password.second.vars.id }}").keyup(checkConfirmPassword);
+	first = $("#{{ form.password.first.vars.id }}");
+	second = $("#{{ form.password.second.vars.id }}");
+	$(first).keyup(checkConfirmPassword);
+	$(second).keyup(checkConfirmPassword);
+
+	$("#registersubmit").click(function() {
+		$(first).val($.md5($(first).val()));
+		$(second).val($.md5($(second).val()));
+	});
 {% endblock %}
 
 {% block title %}Register{% endblock %}
@@ -32,17 +39,25 @@ function checkConfirmPassword(e) {
 	<div class="span6 offset2">
 		{{ form_errors(form) }}
 		<form class="well form-horizontal" id="registerform" name="registerform" 
-				action="{{ path('register') }}" method="POST" enctype="{{ form_enctype(form) }}">
+				action="{{ path('register_check') }}" method="POST" enctype="{{ form_enctype(form) }}">
+			<p>
+				Fill out the form below to sign up. We'll send you a verification email with a 
+				link to activate your account. Once you're verified, log in and have fun!
+			</p>
 			<fieldset>
 				<legend>
 					Register
 					<small> &mdash; All fields are required</small>
 				</legend>
 				<div class="control-group">
-					{{ form_label(form.username, "Username", {'attr': {'class': 'control-label'}}) }}
+					<label class="control-label" for="{{ form.email.vars.id }}">
+						E-Mail Address
+						<i rel="popover" class="icon-question-sign" title="E-Mail Address" 
+							data-content="You sign in with this address."></i>
+					</label>
 					<div class="controls">
-						{{ form_widget(form.username, { 'attr': { 'class': 'input-large' }}) }}
-						<span class="help-inline">{{ form_errors(form.username) }}</span>
+						{{ form_widget(form.email, { 'attr': { 'class': 'input-large' }}) }}
+						<span class="help-inline">{{ form_errors(form.email) }}</span>
 					</div>
 				</div>
 				<div class="control-group">
@@ -60,38 +75,19 @@ function checkConfirmPassword(e) {
 					</div>
 				</div>
 				<div class="control-group">
-					{{ form_label(form.email, "E-Mail Address", { 'attr': { 'class': 'control-label' }}) }}
-					<div class="controls">
-						{{ form_widget(form.email, { 'attr': { 'class': 'input-large' }}) }}
-						<span class="help-inline">{{ form_errors(form.email) }}</span>
-					</div>
-				</div>
-
-				<legend>
-					Preferences
-					<small> &mdash; For your happiness</small>
-				</legend>
-				<div class="control-group">
 					<label class="control-label" for="{{ form.display_name.vars.id }}">
 						Display Name
-						<i rel="popover" title="Display Name" class="icon-question-sign" data-content="Your Display Name is what other users see when you post content."></i>
+						<i rel="popover" title="Display Name" class="icon-question-sign" 
+							data-content="Your Display Name is what other users see when you post content."></i>
 					</label>
 					<div class="controls">
 						{{ form_widget(form.display_name, { 'attr': { 'class': 'input-large' }}) }}
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label" for="{{ form.display_name.vars.id }}">
-						Time Zone
-						<i rel="popover" title="Time Zone" class="icon-question-sign" data-content="We use this to format the times you see. It keeps things straight."></i>
-					</label>
-					<div class="controls">
-						{{ form_widget(form.timezone) }}
-					</div>
-				</div>
+
 				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">Submit</button>
-					<button class="btn">Cancel</button>
+					<button type="submit" id="registersubmit" class="btn btn-primary">Submit</button>
+					<a class="btn" href="{{ path('index') }}">Cancel</a>
 					<button type="reset" class="btn">Clear</button>
 				</div>
 				{{ form_rest(form) }}

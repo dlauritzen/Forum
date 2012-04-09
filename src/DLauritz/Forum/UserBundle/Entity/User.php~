@@ -7,7 +7,7 @@ use \Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface {
 	
 	public function equals(UserInterface $other) {
-		return $this->getUsername() == $other->getUsername();
+		//return $this->getUsername() == $other->getUsername();
 	}
 	
 	public function getSalt() {
@@ -19,9 +19,25 @@ class User implements UserInterface {
 	}
 	
 	public function getRoles() {
-		return array(
-			'ROLE_USER'
-		);
+		$roles = array();
+		
+		switch($this->rank) {
+			case 3:
+				$roles[] = 'ROLE_SYSOP';
+			case 2:
+				$roles[] = 'ROLE_ADMIN';
+			case 1:
+				$roles[] = 'ROLE_USER';
+			case 0:
+				$roles[] = 'ROLE_GUEST';
+				break;
+		}
+		
+		return $roles;
+	}
+	
+	public function getUsername() {
+		return $this->getEmail();
 	}
 	
     /**
@@ -30,9 +46,9 @@ class User implements UserInterface {
     private $id;
 
     /**
-     * @var string $username
+     * @var string $email
      */
-    private $username;
+    private $email;
 
     /**
      * @var string $password
@@ -45,9 +61,9 @@ class User implements UserInterface {
     private $display_name;
 
     /**
-     * @var string $email
+     * @var integer $rank
      */
-    private $email;
+    private $rank;
 
     /**
      * @var string $avatar
@@ -55,11 +71,30 @@ class User implements UserInterface {
     private $avatar;
 
     /**
+     * @var string $timezone
+     */
+    private $timezone;
+
+    /**
      * @var datetime $joined
      */
     private $joined;
 
+    /**
+     * @var boolean $verfied
+     */
+    private $verfied;
 
+    /**
+     * @var DLauritz\Forum\ContentBundle\Entity\Post
+     */
+    private $posts;
+
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -71,23 +106,23 @@ class User implements UserInterface {
     }
 
     /**
-     * Set username
+     * Set email
      *
-     * @param string $username
+     * @param string $email
      */
-    public function setUsername($username)
+    public function setEmail($email)
     {
-        $this->username = $username;
+        $this->email = $email;
     }
 
     /**
-     * Get username
+     * Get email
      *
      * @return string 
      */
-    public function getUsername()
+    public function getEmail()
     {
-        return $this->username;
+        return $this->email;
     }
 
     /**
@@ -131,23 +166,23 @@ class User implements UserInterface {
     }
 
     /**
-     * Set email
+     * Set rank
      *
-     * @param string $email
+     * @param integer $rank
      */
-    public function setEmail($email)
+    public function setRank($rank)
     {
-        $this->email = $email;
+        $this->rank = $rank;
     }
 
     /**
-     * Get email
+     * Get rank
      *
-     * @return string 
+     * @return integer 
      */
-    public function getEmail()
+    public function getRank()
     {
-        return $this->email;
+        return $this->rank;
     }
 
     /**
@@ -171,32 +206,6 @@ class User implements UserInterface {
     }
 
     /**
-     * Set joined
-     *
-     * @param datetime $joined
-     */
-    public function setJoined($joined)
-    {
-        $this->joined = $joined;
-    }
-
-    /**
-     * Get joined
-     *
-     * @return datetime 
-     */
-    public function getJoined()
-    {
-        return $this->joined;
-    }
-	
-    /**
-     * @var string $timezone
-     */
-    private $timezone;
-
-
-    /**
      * Set timezone
      *
      * @param string $timezone
@@ -215,16 +224,47 @@ class User implements UserInterface {
     {
         return $this->timezone;
     }
-    /**
-     * @var DLauritz\Forum\ContentBundle\Entity\Post
-     */
-    private $posts;
 
-    public function __construct()
+    /**
+     * Set joined
+     *
+     * @param datetime $joined
+     */
+    public function setJoined($joined)
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->joined = $joined;
     }
-    
+
+    /**
+     * Get joined
+     *
+     * @return datetime 
+     */
+    public function getJoined()
+    {
+        return $this->joined;
+    }
+
+    /**
+     * Set verfied
+     *
+     * @param boolean $verfied
+     */
+    public function setVerfied($verfied)
+    {
+        $this->verfied = $verfied;
+    }
+
+    /**
+     * Get verfied
+     *
+     * @return boolean 
+     */
+    public function getVerfied()
+    {
+        return $this->verfied;
+    }
+
     /**
      * Add posts
      *

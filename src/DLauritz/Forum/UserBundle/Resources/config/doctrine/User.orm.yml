@@ -6,7 +6,7 @@ DLauritz\Forum\UserBundle\Entity\User:
       type: bigint
       generator: { strategy: AUTO }
   fields:
-    username:
+    email:
       type: string
     password:
       type: string
@@ -15,16 +15,18 @@ DLauritz\Forum\UserBundle\Entity\User:
       default: ''
     rank:
       type: integer
-      default: 1 # 1=user, 2=admin, 3=sysop
-    email:
-      type: string
+      default: 1 # 1=user, 2=admin, 3=sysop (0=guest)
     avatar:
       type: string
+      default: ''
     timezone:
       type: string
       default: ''
     joined:
       type: datetime
+    verified:
+      type: boolean
+      default: false
   oneToMany:
     posts:
       targetEntity: DLauritz\Forum\ContentBundle\Entity\Post

@@ -19,3 +19,21 @@ legal:
   defaults:
     _controller: DLauritzForumPagesBundle:Pages:legal
     _format: html
+  requirements:
+    _format: html|txt|json
+
+# Help index
+help_index:
+  pattern: /help
+  defaults:
+    _controller: DLauritzForumPagesBundle:Help:index
+    _format: html
+
+# Help topics
+help_topic:
+  pattern: /help/{topic}.{_format}
+  defaults:
+    _controller: DLauritzForumPagesBundle:Help:view
+    _format: html
+  requirements:
+    _format: html|json

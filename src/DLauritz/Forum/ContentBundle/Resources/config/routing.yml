@@ -1,0 +1,24 @@
+forum_view:
+  pattern: /forum/view/{id}.{_format}
+  defaults:
+    _controller: DLauritzForumContentBundle:Index:viewForum
+    _format: html
+  requirements:
+    _format: html|json
+
+category_view:
+  pattern: /category/view/{id}.{_format}
+  defaults:
+    _controller: DLauritzForumContentBundle:Index:viewForum
+    _format: html
+  requirements:
+    _format: html|json
+
+
+thread_view:
+  pattern: /thread/view/{id}.{_format}
+  defaults:
+    _controller: DLauritzForumContentBundle:Index:viewForum
+    _format: html
+  requirements:
+    _format: html|json

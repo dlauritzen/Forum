@@ -2,13 +2,9 @@ security:
     encoders:
         DLauritz\Forum\UserBundle\Entity\User: sha512
 
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-
     providers:
         main:
-            entity: { class: DLauritz\Forum\UserBundle\Entity\User, property: username }
+            entity: { class: DLauritz\Forum\UserBundle\Entity\User, property: email }
 
     firewalls:
         dev:

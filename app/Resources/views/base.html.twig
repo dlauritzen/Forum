@@ -11,14 +11,17 @@
 {% endblock %}
 {% block header_javascripts %}
 	<script src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+	<script src="{{ asset('js/jquery.md5.js') }}"></script>
 	<script src="{{ asset('prettify/prettify.js') }}"></script>
 	<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('bootstrap/bootstrap-popover.js') }}"></script>
 	<script src="{{ asset('bootstrap/bootstrap-dropdown.js') }}"></script>
+	<script src="{{ asset('bootstrap/bootstrap-tooltip.js') }}"></script>
 {% endblock %}
 	<script>
 {% block other_javascript %}{% endblock %}
 		$(document).ready(function() {
+
 			// Make popover items active
 			$("[rel='popover']").each(function(i, e) {
 				$(this).popover({
@@ -27,8 +30,14 @@
 					trigger: 'hover'
 				});
 			});
+			
 			// Make dropdowns active
-			$('.dropdown-toggle').dropdown()
+			$(".dropdown-toggle").dropdown()
+
+			// Make tooltips active
+			$("[rel='tooltip']").each(function(i, e) {
+				$(this).tooltip();
+			});
 
 			// Do any other onReady code
 {% block jquery_ready %}{% endblock %}
@@ -44,6 +53,21 @@
 {# The flashes show session flash messages (error, warning, info, and success) #}
 {% include '::flashes.html.twig' %}
 
+{% if app.user is not null and not app.user.verified %}
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<div class="alert fade in">
+				<a class="close" data-dismiss="alert">&times;</a>
+				<strong>Warning:</strong> You are not yet verified! You won't be able to
+				post content until you do so.
+				<a href="{{ path('help_topic', {'topic':'verification'}) }}">Fix This</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+
 {# Body content goes here #}
 <div class="container">
 {% block body %}Body{% endblock %}
@@ -57,6 +81,7 @@
 		<div class="span6" id="bottom_links">
 			<ul class="unstyled">
 				<li><a href="{{ path('index') }}">Home</a></li>
+				<li><a href="{{ path('help_index') }}">Help</a></li>
 				<li><a href="{{ path('contact') }}">Contact</a></li>
 				<li><a href="{{ path('credits') }}">Credits</a></li>
 				<li><a href="{{ path('legal') }}">Legal</a></li>
@@ -87,7 +112,7 @@ is licensed under a <a rel="license" href="http://creativecommons.org/licenses/b
 				<a class="close" data-dismiss="alert">&times;</a>
 				<h2>Debug</h2>
 				<ul class="unstyled">
-					<li>User: {% if app.user is null %}<em>None</em>{% else %}{{ app.user.username }}{% endif %}</li>
+					<li>User: {% if app.user is null %}<em>None</em>{% else %}{{ app.user.email }} - {{ app.user.id }}{% endif %}</li>
 					<li>Authentication:
 {% if is_granted('IS_AUTHENTICATED_FULLY') %} Full 
 {% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') %} Remembered

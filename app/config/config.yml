@@ -21,6 +21,10 @@ services:
         class:        Twig_Extension_Debug
         tags:
              - { name: 'twig.extension' }
+    strings.twig.extension:
+        class: DLauritz\Forum\ContentBundle\Extension\StringsExtension
+        tags:
+            -  { name: twig.extension }
 
 # Twig Configuration
 twig:

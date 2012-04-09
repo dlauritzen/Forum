@@ -2,6 +2,13 @@
 
 {% block title %}Log In{% endblock %}
 
+{% block jquery_ready %}
+	$("#loginsubmit").click(function() {
+		// Encode the password before submitting
+		$("#password").val($.md5($("#password").val()));
+	});
+{% endblock %}
+
 {% block content %}
 {% if error %}
 <div class="row">
@@ -21,9 +28,9 @@
 			<fieldset>
 				<legend>Log In</legend>
 				<div class="control-group">
-					<label class="control-label" for="username">Username</label>
+					<label class="control-label" for="email">E-Mail</label>
 					<div class="controls">
-						<input type="text" class="input-large" id="username" name="_username" value="{{ last_username }}" />
+						<input type="text" class="input-large" id="email" name="_username" value="{{ last_email }}" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -42,7 +49,7 @@
 					</div>
 				</div>
 				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" id="loginsubmit" class="btn btn-primary">Submit</button>
 					<a class="btn" href="{{ path('index') }}">Cancel</a>
 				</div>
 			</fieldset>

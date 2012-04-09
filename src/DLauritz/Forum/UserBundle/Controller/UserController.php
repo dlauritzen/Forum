@@ -7,8 +7,56 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserController extends Controller {
 	
-	public function profileAction($username, $_format) {
+	public function profileAction($id, $_format) {
 		
+	}
+	
+	public function registerCheckAction() {
+		$request = $this->getRequest();
+		
+		if ($request->getMethod() == "POST") {
+			$user = new User();
+		
+			$form = $this->createFormBuilder($user)
+				->add('email', 'email')
+				->add('password', 'repeated', array('type' => 'password'))
+				->add('display_name')
+				->getForm();
+			$form->bindRequest($request);
+			
+			if ($form->isValid()) {
+				// Fill non-form fields with defaults
+				$user->setJoined(new \DateTime());
+				$user->setVerfied(false);
+				$user->setAvatar('');
+				$user->setRank(1);
+				$user->setTimezone(date_default_timezone_get());
+				
+				// Encrypt the password
+				$password = $user->getPassword();
+				$this->get('session')->setFlash('info', "Encoding password " . $password);
+				$factory = $this->get('security.encoder_factory');
+				$encoder = $factory->getEncoder($user);
+				$password = $encoder->encodePassword($password, $user->getSalt());
+				$user->setPassword($password);
+				
+				$em = $this->getDoctrine()->getEntityManager();
+				$em->persist($user);
+				$em->flush();
+				$this->get('session')->setFlash('success', "You were registered successfully. "
+					. "Once you answer our verification email, you'll be able to participate "
+					. "in the form.");
+				// Success,
+				return $this->redirect($this->generateUrl('index'));
+			} else {
+				// Invalid
+				$this->get('session')->setFlash('error', "Invalid form data");
+				return $this->redirect($this->generateUrl('register'));
+			}
+		} else {
+			// Show register form
+			return $this->redirect($this->generateUrl('register'));
+		}
 	}
 	
 	public function registerAction() {
@@ -16,43 +64,14 @@ class UserController extends Controller {
 		$user = new User();
 		
 		$form = $this->createFormBuilder($user)
-				->add('username', 'text')
-				->add('password', 'repeated', array('type' => 'password'))
 				->add('email', 'email')
-				->add('display_name', 'text', array('required' => false))
-				->add('timezone', 'timezone', array('required' => false))
+				->add('password', 'repeated', array('type' => 'password'))
+				->add('display_name', 'text', array('required' => true))
 				->getForm();
 		
 		if ($request->getMethod() == "POST") {
-			// Try to register
+			// This should only happen now if they failed validation
 			$form->bindRequest($request);
-			if ($form->isValid()) {
-				$factory = $this->get('security.encoder_factory');
-				$encoder = $factory->getEncoder($user);
-				
-				// Make the password encoded
-				$user->setPassword($encoder->encodePassword($request->get('password'), $user->getSalt()));
-				
-				// Add fields not provided in the form
-				$user->setAvatar('');
-				$user->setJoined(new \DateTime());
-				
-				// Fix optional entries
-				if ($user->getDisplayName() == null) {
-					$user->setDisplayName('');
-				}
-				
-				$em = $this->getDoctrine()->getEntityManager();
-				$em->persist($user);
-				$em->flush();
-				
-				$this->get('session')->setFlash('success', "You were registered! Your username is " 
-						. $user->getUsername() . ".");
-			
-				return $this->redirect($this->generateUrl('index'));
-			} else {
-				$this->get('session')->setFlash('error', "Form validation failed. See errors below.");
-			}
 		}
 		
 		return $this->render('DLauritzForumUserBundle:User:register.html.twig', 
@@ -73,7 +92,7 @@ class UserController extends Controller {
 		
 		return $this->render('DLauritzForumUserBundle:User:login.html.twig', array(
             // last username entered by the user
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'last_email' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
         ));
 	}

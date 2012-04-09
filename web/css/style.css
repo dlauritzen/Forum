@@ -12,6 +12,24 @@ body {
 	padding-bottom: 50px; /* Just for fun */
 }
 
+.left { text-align: left; }
+.right { text-align: right; }
+.middle { vertical-align: middle; } /* -8px */
+.center { text-align: center; }
+
+.widelink {
+	display: block;
+	width: 100%;
+}
+
+.forum-label {
+	font-size: large;
+}
+
+.thread-label {
+	font-size: large;
+}
+
 #bottom_links li {
 	display: inline;
 	padding-right: 10px;
