@@ -40,4 +40,17 @@ class IndexController extends Controller {
 		}
 	}
 	
+	public function viewCategoryAction($id, $_format) {
+		$category = $this->getDoctrine()->getRepository('DLauritzForumContentBundle:Category')
+				->find($id);
+		
+		if ($category) {
+			return $this->render('DLauritzForumContentBundle:Category:view.'.$_format.'.twig',
+					array('category' => $category));
+		} else {
+			$this->get('session')->setFlash('error', "Couldn't find category id " . $id .".");
+			return $this->redirect($this->generateUrl('index'));
+		}
+	}
+	
 }

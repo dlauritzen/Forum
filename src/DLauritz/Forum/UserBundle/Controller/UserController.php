@@ -81,6 +81,10 @@ class UserController extends Controller {
 	public function loginAction() {
 		$request = $this->getRequest();
         $session = $request->getSession();
+		
+		$user = new User();
+		$form = $this->createFormBuilder($user)
+				->getForm();
 
         // get the login error if there is one
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
@@ -93,7 +97,8 @@ class UserController extends Controller {
 		return $this->render('DLauritzForumUserBundle:User:login.html.twig', array(
             // last username entered by the user
             'last_email' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
+            'error' => $error,
+			'form' => $form->createView()
         ));
 	}
 	

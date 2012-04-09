@@ -19,9 +19,15 @@ index:
 
 # Site-wide Search
 search:
+  pattern: /search
+  defaults:
+    _controller: DLauritzForumContentBundle:Search:form
+    _format: html
+
+search_query:
   pattern: /search/{query}
   defaults:
-    _controller: DLauritzForumContentBundle:Index:search
+    _controller: DLauritzForumContentBundle:Search:query
     _format: html
     query: ~
 

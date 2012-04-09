@@ -1,15 +1,14 @@
 {% extends 'DLauritzForumContentBundle::indexlayout.html.twig' %}
 
-{% block title %}Forum Index{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
 
 {% block content %}
 <div class="row">
 	<div class="span12">
-{% include 'DLauritzForumContentBundle:Index:breadcrumb.html.twig' with { 'index' : true } %}
+{% include 'DLauritzForumContentBundle:Index:breadcrumb.html.twig' with { 'category': category, 'first': true } %}
 	</div>
 </div>
 
-{% for category in categories %}
 <div class="row">
 	<div class="span12">
 		<h2>{{ category.name }} <small>{{ category.description|truncate(100) }}</small></h2>
@@ -18,16 +17,12 @@
 
 {% for forum in category.forums %}
 {% include 'DLauritzForumContentBundle:Forum:single.html.twig' with {'forum': forum} %}
-{% endfor %}
-
-{# else if no categories #}
 {% else %}
 <div class="row">
 	<div class="span12 center">
-		<em>No Content</em>
+		<em>No Forums</em>
 	</div>
 </div>
 {% endfor %}
-
 
 {% endblock %}

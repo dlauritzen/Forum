@@ -24,7 +24,7 @@
 
 <div class="row">
 	<div class="span6 offset2">
-		<form class="well form-horizontal" id="loginform" name="loginform" action="{{ path('login_check') }}" method="POST">
+		<form class="well form-horizontal" id="loginform" name="loginform" action="{{ path('login_check') }}" method="POST" enctype="{{ form_enctype(form) }}">
 			<fieldset>
 				<legend>Log In</legend>
 				<div class="control-group">
@@ -52,6 +52,7 @@
 					<button type="submit" id="loginsubmit" class="btn btn-primary">Submit</button>
 					<a class="btn" href="{{ path('index') }}">Cancel</a>
 				</div>
+				{{ form_rest(form) }}
 			</fieldset>
 		</form>
 	</div>

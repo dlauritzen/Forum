@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="span1 right">
+		{# This icon is visible if there are new posts #}
+		<i class="icon-envelope middle" rel="tooltip" title="New Posts" data-placement="left"></i>
+	</div>
+	<div class="span4">
+		<a class="forum-label widelink" href="{{ path('forum_view', {'id': forum.id}) }}">{{ forum.name|truncate(35) }}</a>
+	</div>
+	<div class="span2 right">
+		<a class="widelink" href="#">User Name</a>
+	</div>
+	<div class="span3 right">
+		<a class="widelink" href="#">{{ 'And an even longer thread name just because we can!'|truncate(31) }}</a>
+	</div>
+	<div class="span2 right">
+		Post Time
+	</div>
+</div>

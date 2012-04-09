@@ -9,7 +9,7 @@ forum_view:
 category_view:
   pattern: /category/view/{id}.{_format}
   defaults:
-    _controller: DLauritzForumContentBundle:Index:viewForum
+    _controller: DLauritzForumContentBundle:Index:viewCategory
     _format: html
   requirements:
     _format: html|json

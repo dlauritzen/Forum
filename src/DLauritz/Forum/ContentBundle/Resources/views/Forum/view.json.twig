@@ -1,0 +1,1 @@
+{"id":{{ forum.id }},"name":{{ forum.name|json_encode|raw }},"parent":{% if forum.parent is not null %}{{ forum.parent.id }}{% else %}null{% endif %},"category":{% if forum.category is not null %}{{ forum.category.id }}{% else %}null{% endif %},"threads":[{% for thread in forum.threads %}{{ thread.id }}{% if not loop.last %},{% endif %}{% endfor %}]}
