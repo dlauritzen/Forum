@@ -1,10 +1,17 @@
-<p>Welcome, <strong>{{ user.displayname }}</strong>, to our forum!</p>
+{% autoescape false %}
+<p>Welcome, <strong>{{ user.displayname|escape }}</strong>, to our forum!</p>
 
 <p>You're all set to start viewing content, but we want to make sure you're not 
 	an invading robot/alien incapable of convincing us of your intelligent humanity.
 	To make us blindly accepting of your membership (and let you do boring things like
 	actually post stuff) please visit the following page:
 
-<blockquote><a href="{{ path('user_verify', {'id': user.id, 'authcode': user.authcode}) }}">{{ path('user_verify', {'id': user.id, 'authcode': user.authcode}) }}</blockquote>
+<blockquote><a href="{{ url('user_verify', {'id': user.id, 'authcode': user.authcode}) }}">{{ url('user_verify', {'id': user.id, 'authcode': user.authcode}) }}</blockquote>
 
 	and we'll gladly accept your robot/alien overlordship.</p>
+
+<p>Sincerely,</p>
+
+<p>Us</p>
+
+{% endautoescape %}

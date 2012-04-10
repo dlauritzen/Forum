@@ -24,6 +24,7 @@ class UserController extends Controller {
 				->setFrom('webmaster@dallinlauritzen.com')
 				->setTo($user->getEmail())
 				->setSubject('Welcome to Forum! Verification Instructions Included')
+				->setContentType('text/html')
 				->setBody($this->renderView('DLauritzForumUserBundle:User:verifyemail.html.twig',
 						array('user' => $user)));
 		return ($this->get('mailer')->send($msg) == 1);
@@ -65,12 +66,13 @@ class UserController extends Controller {
 				
 				// Encrypt the password
 				$password = $user->getPassword();
-				$this->get('session')->setFlash('info', "Encoding password " . $password);
+				//$this->get('session')->setFlash('info', "Encoding password " . $password);
 				$factory = $this->get('security.encoder_factory');
 				$encoder = $factory->getEncoder($user);
 				$password = $encoder->encodePassword($password, $user->getSalt());
 				$user->setPassword($password);
 				$user->setVerified(false);
+				$user->setBio('');
 				$user->setAuthcode($this->generateVerificationHash());
 				
 				$em = $this->getDoctrine()->getEntityManager();
