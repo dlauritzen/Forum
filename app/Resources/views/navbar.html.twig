@@ -4,6 +4,14 @@
 			<!-- Logo -->
 			<a class="brand" href="{{ path('index') }}">Forum</a>
 
+			<ul class="nav">
+{% if app.user|isSysop %}
+				<li class="navtext">Sysop Panel</li>
+{% endif %}{% if app.user|isAdmin %}
+				<li class="navtext">Admin Panel</li>
+{% endif %}
+			</ul>
+
 			<!-- Search -->
 			<form class="navbar-search pull-right" id="searchform" name="searchform" action="{{ path('search') }}" method="GET">
 				<input type="text" name="q" id="search-query" class="search-query input-medium" placeholder="Search" />
@@ -13,12 +21,17 @@
 			<ul class="nav pull-right">
 {% if app.user is not null %}
 				<li class="dropdown" id="profile">
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#profile">{{ app.user.displayName }} <b class="caret"></b></a>
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#profile">
+						<img class="navimg" src="{{ app.user|avatar(20) }}" />
+						{{ app.user.displayName }} <b class="caret"></b>
+					</a>
 					<ul class="dropdown-menu">
-						<li><a href="{{ path('user_profile', { 'id' : app.user.id }) }}">Profile</a></li>
+						<li><a href="{{ path('user_profile', { 'id' : app.user.id }) }}">View Profile</a></li>
+						<li><a href="{{ path('user_edit', {'id': app.user.id }) }}">Edit Profile <i class="icon-edit"></i></a></li>
+						<li class="divider"></li>
+						<li><a href="{{ path('logout') }}">Log Out</a></li>
 					</ul>
 				</li>
-				<li><a href="{{ path('logout') }}">Log Out</a></li>
 {% else %}
 <!--
 				<form class="navbar-form pull-left" id="loginform" name="loginform" action="{{ path('login_check') }}" method="POST">
@@ -29,9 +42,9 @@
 					</fieldset>
 				</form>
 -->
-				<li><a href="{{ path('login') }}">Log In</a></li>
+				<li><a href="{{ path('login') }}">Sign In</a></li>
 				<li class="divider-vertical"></li>
-				<li><a href="{{ path('register') }}">Register</a></li>
+				<li><a href="{{ path('register') }}">Sign Up</a></li>
 {% endif %}
 				<li class="divider-vertical"></li>
 			</ul>

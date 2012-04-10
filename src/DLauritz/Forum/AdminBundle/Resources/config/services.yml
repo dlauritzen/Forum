@@ -1,0 +1,7 @@
+parameters:
+#    d_lauritz_forum_admin.example.class: DLauritz\Forum\AdminBundle\Example
+
+services:
+#    d_lauritz_forum_admin.example:
+#        class: %d_lauritz_forum_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

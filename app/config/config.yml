@@ -25,6 +25,10 @@ services:
         class: DLauritz\Forum\ContentBundle\Extension\StringsExtension
         tags:
             -  { name: twig.extension }
+    user.twig.extension:
+        class: DLauritz\Forum\UserBundle\Extension\UserExtension
+        tags:
+            -  { name: twig.extension }
 
 # Twig Configuration
 twig:

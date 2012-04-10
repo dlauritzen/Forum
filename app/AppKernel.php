@@ -20,6 +20,9 @@ class AppKernel extends Kernel
             new DLauritz\Forum\ContentBundle\DLauritzForumContentBundle(),
             new DLauritz\Forum\UserBundle\DLauritzForumUserBundle(),
             new DLauritz\Forum\PagesBundle\DLauritzForumPagesBundle(),
+            new DLauritz\Forum\HelpBundle\DLauritzForumHelpBundle(),
+            new DLauritz\Forum\SysopBundle\DLauritzForumSysopBundle(),
+            new DLauritz\Forum\AdminBundle\DLauritzForumAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

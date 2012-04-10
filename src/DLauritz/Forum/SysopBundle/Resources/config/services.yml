@@ -1,0 +1,7 @@
+parameters:
+#    d_lauritz_forum_sysop.example.class: DLauritz\Forum\SysopBundle\Example
+
+services:
+#    d_lauritz_forum_sysop.example:
+#        class: %d_lauritz_forum_sysop.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,83 @@
+{% extends 'DLauritzForumUserBundle::userlayout.html.twig' %}
+
+{% block title %}{{ user.displayname }} - {% if app.user|isGuest %}Public{% else %}User{% endif %} Profile{% endblock %}
+
+{# Nav has width 3 #}
+{% block nav %}
+<div class="container">
+	<div class="row"><div class="span3"><h2>&nbsp;</h2></div></div>
+	<div class="row">
+		<div class="span3">
+			<div class="well">
+				<h3>Actions {% if app.user|isUser and app.user.id == user.id %}<small>This is You!</small>{% endif %}</h3>
+				<ul class="unstyled">
+				{% if app.user|isUser and app.user.id == user.id or app.user|isAdmin %}
+					<li><a href="{{ path('user_edit', {'id':user.id}) }}">Edit Profile <i class="icon-edit"></i></a></li>
+				{% endif %}
+				{% if app.user|isUser %}
+					<li><a href="#">Send Message</a></li>
+				{% endif %}
+				{% if app.user|isGuest %}
+					<li><em>Sign in to contact this user</em></li>
+				{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{# Content has width 9 #}
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="span9">
+			<h2>
+				{{ user.displayname }} 
+				<small>{% if app.user|isGuest %}Public{% else %}User{% endif %} Profile</small>
+			</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span3">
+			<ul class="thumbnails">
+				<li class="span3">
+					<div class="thumbnail">
+						<img src="{{ user|avatar(200) }}" />
+						<div class="caption">
+							<strong>Member since: {{ user.joined|date('M Y') }}</strong>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="span6">
+			<ul class="unstyled">
+				{% if app.user|isUser and app.user.verified %} {# Only show emails to verified users #}
+				<li>
+					E-Mail Address: <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+					{% if app.user|isAdmin %}
+						{% if user.verified %}
+						<span class="label label-success">Verified</span>
+						{% else %}
+						<span class="label label-warning">Unverified</span>
+						{% endif %}
+					{% endif %}
+				</li>
+				{% endif %}
+				<li>
+					<h3>About</h3>
+					<p>{{ user.bio }}</p>
+				</li>
+				<li>
+					<h3>Statistics</h3>
+					<ul>
+						<li>Rank: {{ user|rankString }}</li>
+						<li>Posts: {{ user.posts|length }}</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}

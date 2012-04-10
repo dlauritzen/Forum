@@ -11,9 +11,20 @@ register_check:
     _format: html
 
 user_profile:
-  pattern: /user/{id}.{_format}
+  pattern: /user/view/{id}.{_format}
   defaults:
     _controller: DLauritzForumUserBundle:User:profile
     _format: html
   requirements:
     _format: html|json
+
+user_verify:
+  pattern: /user/verify/{id}/{authcode}
+  defaults:
+    _controller: DLauritzForumUserBundle:User:authorize
+
+user_edit:
+  pattern: /user/edit/{id}
+  defaults:
+    _controller: DLauritzForumUserBundle:User:edit
+    _format: html

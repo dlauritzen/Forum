@@ -284,4 +284,54 @@ class User implements UserInterface {
     {
         return $this->posts;
     }
+    /**
+     * @var boolean $verified
+     */
+    private $verified;
+
+
+    /**
+     * Set verified
+     *
+     * @param boolean $verified
+     */
+    public function setVerified($verified)
+    {
+        $this->verified = $verified;
+    }
+
+    /**
+     * Get verified
+     *
+     * @return boolean 
+     */
+    public function getVerified()
+    {
+        return $this->verified;
+    }
+    /**
+     * @var string $authcode
+     */
+    private $authcode;
+
+
+    /**
+     * Set authcode
+     *
+     * @param string $authcode
+     */
+    public function setAuthcode($authcode)
+    {
+        $this->authcode = $authcode;
+    }
+
+    /**
+     * Get authcode
+     *
+     * @return string 
+     */
+    public function getAuthcode()
+    {
+        return $this->authcode;
+    }
 }

@@ -18,7 +18,7 @@ class PagesController extends Controller
 		if ($req->getMethod() == "POST") {
 			$message = \Swift_Message::newInstance()
 					->setContentType('text/html')
-					->setFrom(array($req->get('email') => $req->get('name')))
+					->setFrom(array('webmaster@dallinlauritzen.com' => 'Webmaster'))
 					->setSubject("Forum Contact: " . $req->get('subject'))
 					->setTo('dallin@dallinlauritzen.com')
 					->setBody($this->renderView('DLauritzForumPagesBundle:Pages:contact_msg.html.twig', 

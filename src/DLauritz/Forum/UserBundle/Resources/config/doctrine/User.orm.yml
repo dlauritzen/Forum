@@ -22,11 +22,17 @@ DLauritz\Forum\UserBundle\Entity\User:
     timezone:
       type: string
       default: ''
+    bio:
+      type: text
+      default: ''
     joined:
       type: datetime
     verified:
       type: boolean
       default: false
+    authcode:
+      type: string
+      nullable: true
   oneToMany:
     posts:
       targetEntity: DLauritz\Forum\ContentBundle\Entity\Post

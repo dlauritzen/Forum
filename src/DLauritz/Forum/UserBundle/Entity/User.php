@@ -309,4 +309,54 @@ class User implements UserInterface {
     {
         return $this->verified;
     }
+    /**
+     * @var string $authcode
+     */
+    private $authcode;
+
+
+    /**
+     * Set authcode
+     *
+     * @param string $authcode
+     */
+    public function setAuthcode($authcode)
+    {
+        $this->authcode = $authcode;
+    }
+
+    /**
+     * Get authcode
+     *
+     * @return string 
+     */
+    public function getAuthcode()
+    {
+        return $this->authcode;
+    }
+    /**
+     * @var text $bio
+     */
+    private $bio;
+
+
+    /**
+     * Set bio
+     *
+     * @param text $bio
+     */
+    public function setBio($bio)
+    {
+        $this->bio = $bio;
+    }
+
+    /**
+     * Get bio
+     *
+     * @return text 
+     */
+    public function getBio()
+    {
+        return $this->bio;
+    }
 }

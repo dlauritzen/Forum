@@ -7,8 +7,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserController extends Controller {
 	
-	public function profileAction($id, $_format) {
+	private function generateVerificationHash() {
+		$hash = '';
 		
+		// Loop four times, creating a 16-character random hex string
+		for ($i = 0; $i < 4; $i++) {
+			$rand = mt_rand(0x1000, 0xFFFF); // get random 4-digit number
+			$hash .= dechex($rand); // conver to hex and add to hash
+		}
+		
+		return $hash;
+	}
+	
+	private function sendRegistrationEmail($user) {
+		$msg = \Swift_Message::newInstance()
+				->setFrom('webmaster@dallinlauritzen.com')
+				->setTo($user->getEmail())
+				->setSubject('Welcome to Forum! Verification Instructions Included')
+				->setBody($this->renderView('DLauritzForumUserBundle:User:verifyemail.html.twig',
+						array('user' => $user)));
+		return ($this->get('mailer')->send($msg) == 1);
+	}
+	
+	public function profileAction($id, $_format) {
+		$user = $this->getDoctrine()->getRepository('DLauritzForumUserBundle:User')
+				->find($id);
+		
+		if (!$user) {
+			$this->get('session')->setFlash('error', "User id " . $id . " not found.");
+			return $this->redirect($this->generateUrl('index'));
+		}
+		
+		return $this->render('DLauritzForumUserBundle:User:profile.'.$_format.'.twig',
+				array('user' => $user));
 	}
 	
 	public function registerCheckAction() {
@@ -39,14 +70,21 @@ class UserController extends Controller {
 				$encoder = $factory->getEncoder($user);
 				$password = $encoder->encodePassword($password, $user->getSalt());
 				$user->setPassword($password);
+				$user->setVerified(false);
+				$user->setAuthcode($this->generateVerificationHash());
 				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($user);
 				$em->flush();
-				$this->get('session')->setFlash('success', "You were registered successfully. "
-					. "Once you answer our verification email, you'll be able to participate "
-					. "in the form.");
-				// Success,
+				
+				if ($this->sendRegistrationEmail($user)) {
+					$this->get('session')->setFlash('success', "You were registered successfully. "
+						. "Once you answer our verification email, you'll be able to participate "
+						. "in the form.");
+				} else {
+					$this->get('session')->setFlash('error', "You've been registered, but there was "
+						. "an error sending your registration email. ごめなさい。");
+				}
 				return $this->redirect($this->generateUrl('index'));
 			} else {
 				// Invalid
@@ -74,8 +112,32 @@ class UserController extends Controller {
 			$form->bindRequest($request);
 		}
 		
+		//$this->get('session')->setFlash('info', "AuthHash: " . $this->generateVerificationHash());
+		
 		return $this->render('DLauritzForumUserBundle:User:register.html.twig', 
 				array('form' => $form->createView()));
+	}
+	
+	public function authorizeAction($id, $authcode) {
+		$user = $this->getDoctrine()->getRepository('DLauritzForumUserBundle:User')->find($id);
+		
+		if (!$user) {
+			$this->get('session')->setFlash('error', "Invalid user id.");
+		} else {
+			if ($user->getAuthcode() == $authcode) {
+				$user->setVerified(true);
+				$user->setAuthcode(null);
+				
+				$em = $this->getDoctrine()->getEntityManager();
+				$em->persist($user);
+				$em->flush();
+				$this->get('session')->setFlash('success', "Verified! You may now post content.");
+			} else {
+				$this->get('session')->setFlash('error', "Invalid user verification code.");
+			}
+		}
+		
+		return $this->redirect($this->generateUrl('index'));
 	}
 	
 	public function loginAction() {

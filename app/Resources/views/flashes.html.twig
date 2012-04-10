@@ -1,4 +1,4 @@
-
+<!-- Flashes -->
 <div class="container" id="alerts">
 {# Errors #}
 	{% if app.session.hasFlash('error') %}
@@ -51,3 +51,21 @@
 	{% endif %}
 
 </div>
+
+
+
+{% if app.user is not null and not app.user.verified %}
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<div class="alert fade in">
+				<a class="close" data-dismiss="alert">&times;</a>
+				<strong>Warning:</strong> You are not yet verified! You won't be able to
+				post content until you do so.
+				<a href="{{ path('help_topic', {'topic':'verification'}) }}">Fix This</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<!-- End: Flashes -->
