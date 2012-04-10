@@ -3,45 +3,43 @@
 {% block title %}Contact Us{% endblock %}
 
 {% block content %}
-<div class="container">
-	<div class="row">
-		<div class="span8 offset1">
-		<form class="well form-horizontal" name="contactform" id="contactform" action="{{ path('contact') }}" method="POST">
-			<fieldset>
-				<legend>
-					Contact Us
-					<small>&mdash; We'll get to it, eventually...</small>
-				</legend>
-				<div class="control-group">
-					<label class="control-label">Your Name</label>
-					<div class="controls">
-						<input type="text" class="span5 input-xlarge" name="name" id="name" />
-					</div>
+<div class="row">
+	<div class="span8 offset1">
+	<form class="well form-horizontal" name="contactform" id="contactform" action="{{ path('contact') }}" method="POST">
+		<fieldset>
+			<legend>
+				Contact Us
+				<small>&mdash; We'll get to it, eventually...</small>
+			</legend>
+			<div class="control-group">
+				<label class="control-label">Your Name</label>
+				<div class="controls">
+					<input type="text" class="span5 input-xlarge" name="name" id="name" />
 				</div>
-				<div class="control-group">
-					<label class="control-label">E-Mail Address</label>
-					<div class="controls">
-						<input type="email" class="span5 input-xlarge" name="email" id="email" />
-					</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">E-Mail Address</label>
+				<div class="controls">
+					<input type="email" class="span5 input-xlarge" name="email" id="email" />
 				</div>
-				<div class="control-group">
-					<label class="control-label">Subject</label>
-					<div class="controls">
-						<input type="text" class="span5 input-xlarge" name="subject" id="subject" />
-					</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Subject</label>
+				<div class="controls">
+					<input type="text" class="span5 input-xlarge" name="subject" id="subject" />
 				</div>
-				<div class="control-group">
-					<label class="control-label">Message</label>
-					<div class="controls">
-						<textarea class="span5" name="message" id="message" rows="7"></textarea>
-					</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Message</label>
+				<div class="controls">
+					<textarea class="span5" name="message" id="message" rows="7"></textarea>
 				</div>
-				<div class="form-actions">
-					<button type="submit" class="btn btn-primary">Send</button>
-				</div>
-			</fieldset>
-		</form>
-		</div>
+			</div>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">Send</button>
+			</div>
+		</fieldset>
+	</form>
 	</div>
 </div>
 {% endblock %}

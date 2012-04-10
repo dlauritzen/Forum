@@ -134,6 +134,8 @@ class UserController extends Controller {
 				$em->persist($user);
 				$em->flush();
 				$this->get('session')->setFlash('success', "Verified! You may now post content.");
+			} else if ($user->getAuthcode() == null) {
+				$this->get('session')->setFlash('info', "That user is already verified.");
 			} else {
 				$this->get('session')->setFlash('error', "Invalid user verification code.");
 			}
